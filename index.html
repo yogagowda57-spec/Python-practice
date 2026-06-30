@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PyPractice — Python Programming Questions</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" onclick="showPage('home')">
+        <span class="logo-bracket">&lt;</span>audinex_tech<span class="logo-bracket">/&gt;</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" class="nav-link active" data-page="home"   onclick="showPage('home')">Home</a></li>
+        <li><a href="#" class="nav-link"         data-page="concepts" onclick="showPage('concepts')">Concepts</a></li>
+        <li><a href="#" class="nav-link"         data-page="about"  onclick="showPage('about')">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HOME PAGE ── -->
+  <main id="page-home" class="page active">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">Python Practice Platform built by yoga</div>
+        <h1 class="hero-title">
+          Learn Python by<br>
+          <span class="typed-wrapper"><span id="typed-text"></span><span class="cursor">▋</span></span>
+        </h1>
+        <p class="hero-sub">
+          Sharpen your Python skills with categorised practice questions — from beginner basics to advanced OOP.
+          No login. No fluff. Just code.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showPage('concepts')">Browse Questions</button>
+          <button class="btn-ghost" onclick="showPage('concepts'); setTimeout(()=>document.getElementById('search').focus(),300)">Search a Topic</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num" id="stat-total">0</span><span class="stat-label">Questions</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num">13</span><span class="stat-label">Concepts</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num">3</span><span class="stat-label">Levels</span></div>
+        </div>
+      </div>
+      <div class="hero-code-panel" aria-hidden="true">
+        <div class="code-panel-bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="panel-title">practice.py</span></div>
+        <pre class="code-panel-body"><span class="c-kw">def</span> <span class="c-fn">solve</span>(problem):
+    <span class="c-cm"># Think. Plan. Code.</span>
+    solution <span class="c-op">=</span> <span class="c-fn">think</span>(problem)
+    <span class="c-kw">return</span> solution
+
+<span class="c-cm"># Start your journey ↓</span>
+result <span class="c-op">=</span> solve(<span class="c-str">"Python"</span>)
+<span class="c-fn">print</span>(result)</pre>
+      </div>
+    </section>
+
+    <!-- Category quick-links -->
+    <section class="section-categories">
+      <div class="container">
+        <h2 class="section-title">Explore Concepts</h2>
+        <div class="category-grid" id="home-category-grid"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── CONCEPTS PAGE ── -->
+  <main id="page-concepts" class="page">
+    <div class="container concepts-layout">
+
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">Concepts</div>
+        <ul class="sidebar-list" id="sidebar-list"></ul>
+      </aside>
+
+      <!-- Content area -->
+      <section class="content-area">
+
+        <!-- Search bar -->
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="search" class="search-input" placeholder="Search questions by title or concept…" oninput="handleSearch(this.value)" />
+          <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search">✕</button>
+        </div>
+
+        <!-- Filter chips -->
+        <div class="filter-row">
+          <span class="filter-label">Difficulty:</span>
+          <button class="chip active" data-diff="all"    onclick="setDiff('all')">All</button>
+          <button class="chip easy"   data-diff="Easy"   onclick="setDiff('Easy')">Easy</button>
+          <button class="chip medium" data-diff="Medium" onclick="setDiff('Medium')">Medium</button>
+          <button class="chip hard"   data-diff="Hard"   onclick="setDiff('Hard')">Hard</button>
+        </div>
+
+        <!-- Heading -->
+        <div class="content-heading">
+          <h2 id="content-title">All Questions</h2>
+          <span class="q-count" id="q-count"></span>
+        </div>
+
+        <!-- Questions grid -->
+        <div class="questions-grid" id="questions-grid"></div>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="empty-state" style="display:none">
+          <div class="empty-icon">🔍</div>
+          <p>No questions found.<br>Try a different keyword or category.</p>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- ── ABOUT PAGE ── -->
+  <main id="page-about" class="page">
+    <div class="container about-container">
+      <div class="about-card">
+        <div class="about-icon">🐍</div>
+        <h1 class="about-title">About PyPractice</h1>
+        <p class="about-body">
+          PyPractice is a focused learning platform for Python programming students.
+          It provides a curated collection of practice questions organised by concept and difficulty —
+          no accounts, no ads, no distractions.
+        </p>
+        <div class="about-grid">
+          <div class="about-item">
+            <span class="about-item-icon">📚</span>
+            <strong>Structured Learning</strong>
+            <p>Questions grouped by 13 core Python concepts, from Variables to OOP.</p>
+          </div>
+          <div class="about-item">
+            <span class="about-item-icon">🎯</span>
+            <strong>Difficulty Levels</strong>
+            <p>Each question is tagged Easy, Medium, or Hard so you can progress at your own pace.</p>
+          </div>
+          <div class="about-item">
+            <span class="about-item-icon">💡</span>
+            <strong>Hints Included</strong>
+            <p>Optional hints guide you when you're stuck — without giving away the answer.</p>
+          </div>
+          <div class="about-item">
+            <span class="about-item-icon">🔍</span>
+            <strong>Instant Search</strong>
+            <p>Search across all questions by title or concept in real time.</p>
+          </div>
+        </div>
+        <p class="about-note">
+          Questions are maintained by the course instructor.  <code>Yogananda</code> 
+        </p>
+        <button class="btn-primary" onclick="showPage('concepts')">Start Practising →</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── QUESTION MODAL ── -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <div class="modal-meta">
+          <span class="modal-concept" id="modal-concept"></span>
+          <span class="modal-badge" id="modal-badge"></span>
+        </div>
+        <h2 class="modal-title" id="modal-title"></h2>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <div class="modal-section-label">Problem Statement</div>
+          <p id="modal-problem"></p>
+        </div>
+        <div class="modal-row">
+          <div class="modal-section" id="modal-input-wrap">
+            <div class="modal-section-label">Sample Input</div>
+            <pre class="modal-code" id="modal-input"></pre>
+          </div>
+          <div class="modal-section" id="modal-output-wrap">
+            <div class="modal-section-label">Expected Output</div>
+            <pre class="modal-code" id="modal-output"></pre>
+          </div>
+        </div>
+        <div class="modal-section hint-section" id="modal-hint-wrap" style="display:none">
+          <button class="hint-toggle" id="hintToggle" onclick="toggleHint()">
+            <span class="hint-icon">💡</span> Show Hint
+          </button>
+          <div class="hint-body" id="hintBody" style="display:none">
+            <p id="modal-hint"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
